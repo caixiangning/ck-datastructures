@@ -72,8 +72,8 @@ public class StackArrayTest {
 		stack.push(60);
 		stack.push(80);
 		
-		System.out.println("依次对栈进行出栈操作来输出栈中所有元素：");
 		// 对栈进行出栈操作
+		System.out.println("依次对栈进行出栈操作来输出栈中所有元素：");
 		while(!stack.isEmpty()){
 			long item = stack.pop();
 			System.out.print(item);
