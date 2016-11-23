@@ -1,0 +1,108 @@
+package org.codethink.queue;
+
+import java.lang.reflect.Array;
+
+import org.junit.Test;
+
+/**
+ * 
+ * 数组实现优先级队列的数据结构(泛型)
+ * 优先级队列中，数据项是有序的，最小的数据项在队头，而最大的数据项在队尾(我们假定最小的数据项具有最高的优先级)
+ * 队列的算法复杂度：队列的数据项的插入操作的时间复杂度是O(N)、删除操作的时间复杂度为常数O(1).
+ * 
+ * @author CaiXiangNing
+ * @date 2016年11月23日
+ * @email caixiangning@gmail.com
+ * @reference <<Data Structures And Algorithms in Java>>
+ */
+public class PriorityQueueTest {
+	
+	// 定义优先级队列的数据结构(以存储long类型数据为例)
+	class PriorityQueue<T extends Number>{
+		private int maxSize; // 优先级队列最大长度
+		private T[] queArray; // 存储优先级队列的数组
+		private int nItems; // 优先级队列数据项个数
+		
+		// 使用数组创建优先级队列结构
+		@SuppressWarnings("unchecked")
+		public PriorityQueue(int maxSize, Class<T> clazz) {
+			this.maxSize = maxSize;
+			queArray = (T[])Array.newInstance(clazz, maxSize);
+			nItems = 0;
+		}
+		// 在优先级队列中插入数据项
+		public void insert(T item){
+			int insertIndex = 0; // 记录待插入的数据项应该插入位置的坐标
+			// 插入第一个数据项
+			if(nItems == 0){
+				queArray[nItems++] = item;
+			}
+			else{
+				// 这里的操作有点类似于降序的有序数组的插入，我们前面讨论的有序数组是升序的
+				for(int j=nItems-1; j>=0; j--){
+					// 如果待插入的数据项比遍历的位置的数据项大则遍历到的这个元素后移
+					// 这就是从后往前遍历的好处，可以边遍历边后移，而如果从前遍历则找到后需要循环后移后面的元素
+					if(item.doubleValue() > queArray[j].doubleValue()){
+						insertIndex = j;
+						queArray[j+1] = queArray[j];
+					}
+					// 如果待插入的数据项比遍历的位置的数据项小则说明该数据项应该插入到该数据项之后
+					else{
+						insertIndex = j+1;
+						break;
+					}
+				}
+				queArray[insertIndex] = item;
+				nItems++; // 插入元素则数据项个数+1
+			}
+		}
+		
+		// 在优先级队列中删除数据项
+		public T remove(){
+			return queArray[--nItems];
+		}
+		
+		// 在优先级队列中获取数据项
+		public T peekMin(){
+			return queArray[nItems-1];
+		}
+		
+		// 判断优先级队列是否为空
+		public boolean isEmpty(){
+			return (nItems == 0);
+		}
+		
+		// 判断优先级队列是否已满
+		public boolean isFull(){
+			return (nItems == maxSize);
+		}
+		
+	}
+	
+	//数组实现的队列的数据结构的测试方法
+	@Test
+	public void testPriorityQueue(){
+		PriorityQueue<Float> priorityQueue = new PriorityQueue<Float>(5, Float.class);
+		// 向队列中插入四个数据项：60.5f -> 40.5f 60.5f -> 30.5f 40.5f 60.5f -> 30.5f 40.5f 60.5f 70.5f
+		priorityQueue.insert(60.5f);
+		priorityQueue.insert(40.5f);
+		priorityQueue.insert(30.5f);
+		priorityQueue.insert(70.5f);
+		
+		// 在队列中移除三个数据项：30.5f 40.5f 60.5f 70.5f -> 40.5f 60.5f 70.5f -> 60.5f 70.5f
+		priorityQueue.remove();
+		priorityQueue.remove();
+		
+		// 向队列中插入四个数据项：60.5f 70.5f -> 20.5f 60.5f 70.5f -> 20.5f 50.5f 60.5f 70.5f
+		priorityQueue.insert(20.5f);
+		priorityQueue.insert(50.5f);
+		
+		// 遍历并输出队列中的所有数据项
+		System.out.println("依次移除优先级队列中数据项来输出栈中所有元素:");
+		while(!priorityQueue.isEmpty()){
+			float item = priorityQueue.remove();
+			System.out.print(item);
+			System.out.print(" ");
+		}
+	}
+}
