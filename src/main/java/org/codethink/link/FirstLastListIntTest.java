@@ -5,8 +5,6 @@ import org.junit.Test;
 /**
  * 
  * 链接点实现双端链表数据结构
- * 单链表可进行操作：在链表头插入一个数据项、在链表尾插入一个数据项、在链表头删除一个数据项、
- * 遍历链表显示内容、查找指定数据项的链接点、删除指定数据项的链接点
  * 
  * 双端链表特殊的地方(实现结构时要着重考虑)是含有两个链接点，分别是链表头和链表尾链接点，
  * 如果链表中只有一个链接点则表头表尾都指向这个链接点，如果没有链接点，则表头表尾链接点都是null。
@@ -17,7 +15,7 @@ import org.junit.Test;
  * @date 2016年11月29日
  * @email caixiangning@gmail.com
  */
-public class FirstLastList {
+public class FirstLastListIntTest {
 	
 	//链表中基础数据链接点
 	class Link{
@@ -81,8 +79,7 @@ public class FirstLastList {
 		
 		/**
 		 * 在链表头删除一个链接点(需要考虑链表中只有一个元素的情况)
-		 * 操作：将链表头的链接点指向第二个链接点，这样就断开了和第一个链接点的链接,
-		 * 获取第二个链接点的方法是根据之前链表头的链接点的nextLink字段即可找到。
+		 * 操作：将链表头的链接点指向链表头链接点的nextLink指向的第二个链接点即可。
 		 */
 		public Link deleteFirstLink(){
 			Link firstLink = this.firstLink;
