@@ -14,18 +14,18 @@ import org.junit.Test;
  * @date 2016年11月28日
  * @email caixiangning@gmail.com
  */
-public class LinkListTest {
+public class LinkListIntTest {
 	
 	
 	// 链表中基础数据链接点
-	class Link<T>{
+	class Link{
 		// 存储链接点的数据
-		private T iData;
+		private int iData;
 		// 指向下一个链接点
-		private Link<T> nextLink;
+		private Link nextLink;
 		
 		// 链表点构造方法
-		public Link(T iData) {
+		public Link(int iData) {
 			// TODO Auto-generated constructor stub
 			this.iData = iData;
 		}
@@ -37,18 +37,18 @@ public class LinkListTest {
 	}
 	
 	// 链接点实现单链表数据结构
-	class LinkList<T>{
+	class LinkList{
 		// 单链表只包含一个链接点，即对链表中的一个链接点的引用
 		// 这个链接点是链表唯一需要维护的信息，用来定位其他的链接点，从该链接点出发可以定位到其他链接点
-		private Link<T> firstLink;
+		private Link firstLink;
 		
 		/**
 		 * 在链表头插入一个链接点
 		 * 操作：创建链接点，然后将新链接点的nextLink字段指向链表的第一个链接点即可。
 		 * @param iData
 		 */
-		public void insertLink(T iData){
-			Link<T> newLink = new Link<T>(iData);
+		public void insertLink(int iData){
+			Link newLink = new Link(iData);
 			newLink.nextLink = this.firstLink;
 			this.firstLink = newLink;
 		}
@@ -57,8 +57,8 @@ public class LinkListTest {
 		 * 在链表头删除一个链接点(该方法假定链表不为空)
 		 * 操作：将链表头链接点指向链接点的nextLink字段指向的第二个链接点，断开原链表头链接点和链表的连接。
 		 */
-		public Link<T> deleteLink(){
-			Link<T> firstLink = this.firstLink;
+		public Link deleteLink(){
+			Link firstLink = this.firstLink;
 			this.firstLink = firstLink.nextLink;
 			return firstLink;
 		}
@@ -70,8 +70,8 @@ public class LinkListTest {
 		 * @param key
 		 * @return
 		 */
-		public Link<T> findKeyLink(T key){
-			Link<T> currentLink = this.firstLink;
+		public Link findKeyLink(int key){
+			Link currentLink = this.firstLink;
 			while(currentLink.iData != key){
 				// 到达链表的链尾
 				if(currentLink.nextLink == null){
@@ -93,10 +93,10 @@ public class LinkListTest {
 		 * @param key
 		 * @return
 		 */
-		public Link<T> deleteKeyLink(T key){
+		public Link deleteKeyLink(int key){
 			// 当前链接点和当前链接点的上一个链接点
-			Link<T> currentLink = this.firstLink;
-			Link<T> previousLink = this.firstLink;
+			Link currentLink = this.firstLink;
+			Link previousLink = this.firstLink;
 			while(currentLink.iData != key){
 				// 到达链表的链尾
 				if(currentLink.nextLink == null){
@@ -124,7 +124,7 @@ public class LinkListTest {
 		 */
 		public void displayLink(){
 			System.out.print("Link(firstLink --> lastLink): ");
-			Link<T> currentLink = this.firstLink;
+			Link currentLink = this.firstLink;
 			while(currentLink != null){
 				System.out.print(currentLink.iData + " ");
 				currentLink = currentLink.nextLink;
@@ -141,7 +141,7 @@ public class LinkListTest {
 	@Test
 	public void testLinkList(){
 		// 创建空的单链表
-		LinkList<Integer> linkList = new LinkList<Integer>();
+		LinkList linkList = new LinkList();
 		
 		// 链表头执行插入操作
 		linkList.insertLink(60);
@@ -156,7 +156,7 @@ public class LinkListTest {
 		
 		// 查找指定数据项的链接点
 		int key = 80;
-		Link<Integer> link = linkList.findKeyLink(key);
+		Link link = linkList.findKeyLink(key);
 		if(link == null){
 			System.out.println("can't find key: " + key);
 		}
@@ -166,7 +166,7 @@ public class LinkListTest {
 		
 		// 链表头执行删除操作并输出删除的链接点
 		while(!linkList.isEmpty()){
-			Link<Integer> deleteLink = linkList.deleteLink();
+			Link deleteLink = linkList.deleteLink();
 			System.out.print("Deleted Link: ");
 			deleteLink.displayLink();
 			System.out.println();
