@@ -7,7 +7,7 @@ import org.junit.Test;
  * 二叉树数据结构泛型实现(节点最多只有两个的树叫做二叉树)
  * 
  * @author CaiXiangNing
- * @date 2016年12月6日
+ * @date 2016年12月8日
  * @email caixiangning@gmail.com
  */
 public class TreeTest {
